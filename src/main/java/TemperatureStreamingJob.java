@@ -1,4 +1,3 @@
-import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
@@ -16,13 +15,10 @@ public class TemperatureStreamingJob {
         // Simulate a stream of TemperatureReadings using TemperatureSimulator
         DataStream<TemperatureReading> temperatureStream = env.addSource(new TemperatureSimulator());
 
-        DataStream<TemperatureReading> temperatureAnomalies = temperatureStream
+        // Detect temperature anomalies using TemperatureAnomalyProcessor
+        temperatureStream
                 .windowAll(TumblingProcessingTimeWindows.of(Time.minutes(1)))
                 .process(new TemperatureAnomalyProcessor());
-
-        // Detect temperature anomalies using TemperatureAnomalyProcessor
-        temperatureAnomalies.print().setParallelism(1);;
-
         // Execute the job
         env.execute("TemperatureStreamingJob");
 

@@ -11,9 +11,9 @@ repositories {
 
 dependencies {
     // Apache Flink Core
-    compileOnly group: 'org.apache.flink', name: 'flink-streaming-java', version: '1.18.0'
-    implementation group: 'org.apache.flink', name: 'flink-java', version: '1.18.0'
-    implementation group: 'org.apache.flink', name: 'flink-clients', version: '1.18.0'
+    compileOnly group: 'org.apache.flink', name: 'flink-streaming-java', version: '1.17.2'
+    implementation group: 'org.apache.flink', name: 'flink-java', version: '1.17.2'
+    implementation group: 'org.apache.flink', name: 'flink-clients', version: '1.17.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'

@@ -4,18 +4,21 @@ import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFuncti
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
+import java.time.LocalDateTime;
+
 public class TemperatureAnomalyProcessor extends ProcessAllWindowFunction<TemperatureReading, TemperatureReading, TimeWindow> {
 
     @Override
     public void process(Context context, Iterable<TemperatureReading> temperatureReadings, Collector<TemperatureReading> temperatureAnomalies) {
         double temperatureAvg = calculateAvg(temperatureReadings);
 
+        System.out.println("##### time: " + LocalDateTime.now() + " temperature avg: "+ temperatureAvg +" #####");
         for (TemperatureReading reading : temperatureReadings) {
             if(Math.abs(reading.getTemperature()-temperatureAvg)>3){
-                temperatureAnomalies.collect(reading);
+                System.out.println("Device: " + reading.getSensorId()+", measurement: "+ reading.getTemperature() +", time: "+ reading.getTimestamp());
             }
         }
-        System.out.println(temperatureAnomalies);
+
     }
 
     private double calculateAvg(Iterable<TemperatureReading> elements){
